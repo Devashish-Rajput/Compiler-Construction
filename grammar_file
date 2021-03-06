@@ -1,6 +1,0 @@
-S->ABCDE
-A->a|epsilon
-B->b|epsilon
-C->c
-D->d|epsilon
-E->e|epsilon

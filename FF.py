@@ -7,7 +7,7 @@ class LL1Parser:
 	first_table= {}
 	follow_table= {}
 	table={}
-	def __init__(self,file='grammar_file'):
+	def __init__(self,file='grammar_file.txt'):
 		grammar = open(file, "r")
 		self.Create_Productions(grammar)
 		for nt in self.productions:
@@ -106,6 +106,19 @@ class LL1Parser:
 		print("\n")
 
 ##Main Function 
-if __name__ == "__main__":
-	parser = LL1Parser()
-	parser.PrintDetails()
+com=[]
+with open('grammar_file.txt') as f:
+	com = [line.rstrip() for line in f]
+a=[]
+for x in com:
+	c=''
+	if(x[0]==x[3]):
+		c=x[0:3]+x[4:]
+		a.append(c)
+	else:
+		a.append(x)
+
+with open('grammar_file.txt', "w") as outfile:
+	outfile.write("\n".join(a))
+parser = LL1Parser()
+parser.PrintDetails()
