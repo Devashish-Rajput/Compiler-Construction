@@ -1,12 +1,17 @@
 gram = {
-	"E":["E+E","E*E","(E)","a"]
+	"E":["E*E","E+E","(E)","i"]
 }
-starting_terminal = "E"
-inp = "a"
 
+starting_terminal = "E"
+inp = "i*i+i"
+
+
+inp=inp+'$'
 stack = "$"
 print(f'{"Stack": <15}'+"|"+f'{"Input Buffer": <15}'+"|"+f'Parsing Action')
 print(f'{"-":-<50}')
+
+
 
 while True:
 	action = True
