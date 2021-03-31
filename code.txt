@@ -1,4 +1,5 @@
-E->E+E
-E->E*E
-E->(E)
-E->i
+S->L=R
+S->R
+L->*R
+L->id
+R->L

@@ -1,9 +1,11 @@
 gram = {
-	"S":["CC"],
-	"C":["aC","d"]
+	"S":["L=R","R"],
+	"L":["*R","id"],
+	"R":["L"]
+
 }
 start = "S"
-terms = ["a","d","$"]
+terms = ["id","$"]
 
 non_terms = []
 for i in gram:

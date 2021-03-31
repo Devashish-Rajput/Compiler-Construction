@@ -1,42 +1,59 @@
-import sys
-non_terminal=("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-op=("+","-","/","*","^","(",")")
-x=("|")
-n=int(input("Enter the number of terminal :- "))
-b=""
-a=""
-for i in range(n):
-    s=input("Enter the starting terminal :- ")
-    p=input("Enter the production  :- ")
-    grammer=("grammer is "+s+ "->" +p)
-    print(grammer)
-    b=b+s+"`->"
-    a=a+s+"->"
-    p=p.split("|")
-    #if(p!=x):
-    #p.append("ϵ")
-    print(p)
-    for z in p:
-        if s[0]==z[0]:            
-            f=("1st production is :-"+s+"->"+z[1]+""+s+"`")
-            print(f)
-            s1=("2nd production is :-"+s+"`->"+z[1:]+""+s+"`|"+"ϵ")
-            print(s1)
-            b=b+z[1:]+""+s+"`|"
-            a=a+z[1]+""+s+"`|"
+from pythonds.basic.stack import Stack
+import random
+import string
+
+exp = '( ( ( a + null ) | b ) . c )'
+
+Parent = Stack()
+Ch = Stack()
+Operator = Stack()
+
+
+def Convert(exp):
+    ListExp = exp.split()
+    Production = {}
+    NonTerminals = list(string.ascii_uppercase)
+
+    for i in ListExp:
+
+        if i == '(':
+            Parent.push('(')
+
+        elif i == ')':
+            Parent.pop()
+            op = Operator.pop()
+            right = Ch.pop()
+            left = Ch.pop()
+
+            if Parent.isEmpty():
+                NT = 'S'
+                del NonTerminals[NonTerminals.index('S')]
+
+            else:
+                NT = random.choice(NonTerminals)
+                del NonTerminals[NonTerminals.index(NT)]
+
+            if op == '|':
+                Production[NT] = [left, right]
+            elif op == '.':
+                Production[NT] = [left+right]
+            elif op == '*':
+                Production[NT] = [NT+left, 'EPSILON']
+            elif op == '+':
+                Production[NT] = [left+NT, left]
+            Ch.push(NT)
+        elif i in ['*', '+', '|', '.']:
+            Operator.push(i)
         else:
-            b=b+z+"|"
-            a=a+z+"|"
-            print("Grammer is not recursive")
-    b=b+"ϵ"
-    print(a[:-1])
-    print(b)
-    b=""
-    if s in non_terminal:
-        print("Grammer is incorrect")
-    elif s[0]==p[0]:
-        print("It Is Recursive")
-    elif p[0] in op:
-        print("Grammer is not recursive")
-    else:
-        print("Solve")
+            Ch.push(i)
+    for key in Production.keys():
+        print(key, ' --> ', end = '')
+        for i in range(len(Production[key])):
+            if not (i == len(Production[key]) - 1):
+                print(Production[key][i], ' | ', end = '')
+            else:
+                print(Production[key][i], end = '')
+        print()
+    print('This is the context free grammar for the given regular expression where S is the start symbol')
+
+Convert(exp)
