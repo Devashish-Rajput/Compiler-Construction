@@ -1,6 +1,8 @@
-
-with open('L&T.txt') as f:
-	a = [line.rstrip() for line in f]
+print("Enter the Number of Productions: ")
+input_a = int(input())
+a=[]
+for i in range(0,input_a,1):
+    a.append(str(input()))
 
 rules = {}
 terms = []
